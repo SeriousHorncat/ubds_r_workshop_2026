@@ -63,6 +63,8 @@ fahr_to_kelvin("300")
  ## R expects arguments to be in the exact same order as defined in the function, 
  # to use a different order, they must be named parameters instead
   head(calculateGDP(gapminder,"Australia", 1962))
+  
+  unique(gapminder$country)
 
  
  
