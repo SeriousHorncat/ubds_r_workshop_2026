@@ -48,3 +48,35 @@ ggplot(data = gapminder, mapping = aes(x=year,
   geom_line(mapping = aes(color=continent))
 
 # group of points, BEHIND another group of points. layer multiple sets of points?
+
+
+#faceting for multi-panel plots lets you put into multiple plot panels
+#labels, themes, exporting
+
+#original plot
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) + geom_point()
+
+# scaling and alpha
+#ggplot( data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) + geom_point(alpha = 0.5) + scale_x_log10(10)
+
+ggplot( data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) + geom_point(alpha = 0.5) + scale_x_log10()
+
+# use lm method with geom_smooth
+
+
+ggplot( data = gapminder, mapping = aes(x= gdpPercap, y = lifeExp)) +
+  geom_point(alpha = 0.5) + scale_x_log10() + geom_smooth(method='lm', linewidth=1.5)
+
+# creating multipanel plot
+americas <- gapminder[gapminder$continent == "Americas",]
+life_expectancy_plot <- ggplot(data = americas, mapping = aes(x=year, y=lifeExp, color=continent)) +
+  geom_line() +
+  facet_wrap( ~ country ) +
+  theme(axis.text.x = element_text(angle = 45 )) +
+  labs(x = "Year", y = "Life Expectancy", title = "Figure 1", color = "Continent")
+ggsave(filename="life_expectancy.png",
+       plot=life_expectancy_plot,
+       width = 12,
+       height = 10,
+       dpi = 450,
+       unit='cm')
